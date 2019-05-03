@@ -1,0 +1,9 @@
+To compile the file just type: make
+	- which will create a executable named "mycity"
+
+To run just type: ./mycity
+    - it should output a pdf file "mycity.pdf"
+
+To clean just type: make clean
+    - it should remove all the files (city.cmi, city.cmx, mycity, city.o,
+	  mycity.pdf)  except the source.
