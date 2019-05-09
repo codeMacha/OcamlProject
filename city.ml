@@ -1,159 +1,71 @@
-(** Pasang Sherpa 
-    Project : generate a city art through usage of cairo2 lib packages *)
+(** Random floating number generator*)
+let random_float x y = x +. Random.float (y -. x)
 
-let draw filename =
+(** draw filename for the canvas width and height*)
+let generate_building filename w h =
 
-  let surface = Cairo.PDF.create ~fname:filename ~width:250.0 ~height:150.0 in
+  (* PDF surface *)
+  let surface = Cairo.PDF.create ~fname:filename ~width:w ~height:h in
+  (* obtain context *)
   let cr = Cairo.create surface in
+  
+  (*the building function*)
+  let building xaxis yaxis apts floors =
+    Cairo.save cr;
 
-  Cairo.set_line_width cr 0.65;
+    let width = (apts *. 16.0) +. (2.0 *. 7.0)  in
+    let height = (floors *. 16.0) +. (2.0 *. 7.0)  in
+    
+    Cairo.translate cr xaxis (yaxis -. height);
+    
+    Cairo.set_source_rgba cr 0.0 0.0 0.0 1.0;
+    Cairo.rectangle cr 0.0 0.0 width height;
+    Cairo.fill cr;
 
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 5.0 125.0;
-  Cairo.line_to cr 245.0 125.0;
-  Cairo.stroke cr;
+    Cairo.save cr;
+    Cairo.set_source_rgba cr 0.0 0.5 0.5 0.5;
+    Cairo.translate cr 4.0 4.0;
+    Cairo.translate cr 4.0 4.0;
+ 
+    let count = int_of_float apts in 
+    let floor_count = int_of_float floors in
+    (* drawing windows by the floor and #apts*)
+    for i = 0 to (floor_count - 1) do
+      Cairo.save cr; 
+      Cairo.translate cr 4.0 4.0;
+      for j = 0 to (count - 1) do
+        Cairo.rectangle cr 0.0 0.0 8.0 10.0;
+        Cairo.fill cr;
+        Cairo.translate cr 16.0 0.0;
+      done;
 
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 5.0 124.0;
-  Cairo.line_to cr 245.0 124.0;
-  Cairo.stroke cr;
+      Cairo.restore cr;
+      Cairo. translate cr 0.0 16.0;
+    done;  
 
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 5.0 123.0;
-  Cairo.line_to cr 245.0 123.0;
-  Cairo.stroke cr;
+    Cairo.restore cr;
 
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 5.0 122.0;
-  Cairo.line_to cr 245.0 122.0;
-  Cairo.stroke cr;
-
-(*Building lines starts from here*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 10.0 65.0;
-  Cairo.line_to cr 10.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 30.0 65.0;
-  Cairo.line_to cr 30.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 10.0 65.0;
-  Cairo.line_to cr 30.0 65.0;
-  Cairo.stroke cr;
-
-(*Second building from left*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 35.0 80.0;
-  Cairo.line_to cr 35.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 60.0 80.0;
-  Cairo.line_to cr 60.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 35.0 80.0;
-  Cairo.line_to cr 60.0 80.0;
-  Cairo.stroke cr;
-
-(*third burilding from left*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 61.5 50.0;
-  Cairo.line_to cr 61.5 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 82.0 50.0;
-  Cairo.line_to cr 82.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 61.5 50.0;
-  Cairo.line_to cr 82.0 50.0;
-  Cairo.stroke cr;
-
-(*fourth burilding from left*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 102.0 5.0;
-  Cairo.line_to cr 102.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 122.0 5.0;
-  Cairo.line_to cr 122.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 102.0 5.0;
-  Cairo.line_to cr 122.0 5.0;
-  Cairo.stroke cr;
-
-(*fifth burilding from left*)
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 138.0 65.0;
-  Cairo.line_to cr 138.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 122.0 65.0;
-  Cairo.line_to cr 138.0 65.0;
-  Cairo.stroke cr;
-
-(*sixth burilding from left*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 145.0 5.0;
-  Cairo.line_to cr 145.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 165.0 5.0;
-  Cairo.line_to cr 165.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 145.0 5.0;
-  Cairo.line_to cr 165.0 5.0;
-  Cairo.stroke cr;
-
-(*seventh building from left*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 170.0 50.0;
-  Cairo.line_to cr 170.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 195.0 50.0;
-  Cairo.line_to cr 195.0 80.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 170.0 50.0;
-  Cairo.line_to cr 195.0 50.0;
-  Cairo.stroke cr;
-
-(*eigth building from left*)
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 180.0 80.0;
-  Cairo.line_to cr 180.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 225.0 80.0;
-  Cairo.line_to cr 225.0 125.0;
-  Cairo.stroke cr;
-
-  Cairo.set_source_rgba cr 0.3 0.3 0.7 1.0;
-  Cairo.move_to cr 180.0 80.0;
-  Cairo.line_to cr 225.0 80.0;
-  Cairo.stroke cr;
-
-
+    Cairo.restore cr;
+   
+  in
+   (*building it manually .. 
+     working to make it more random and generate it self*)
+    building 10.0 250.0 3.0 6.0;
+    building 40.0 250.0 5.0 10.0;
+    building 135.0 250.0 3.0 4.0;
+    building 202.0 250.0 2.0 14.0;
+    building 240.0 250.0 4.0 13.0;
+    building 320.0 250.0 4.0 11.0;
+    
   Cairo.Surface.finish surface
 
 let () =
-  draw "mycity.pdf"
+  generate_building "mypp.pdf" 400.0 250.0
+
+(*
+    let x = Random.float 4.0;
+    let y = Random.float 6.0;
+    let s = Random.float 4.0;
+    let t = Random.float 6.0;
+  }
+*)
