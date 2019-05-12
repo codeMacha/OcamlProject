@@ -7,3 +7,7 @@ To run just type: ./mycity
 To clean just type: make clean
     - it should remove all the files (city.cmi, city.cmx, mycity, city.o,
 	  mycity.pdf)  except the source.
+	  
+To see different art, once you run the program once
+just keep entering ./mycity
+it will generate a different art.
